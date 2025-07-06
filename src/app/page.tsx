@@ -5,7 +5,7 @@ import DocumentEditor from "@/components/document-editor/DocumentEditor";
 import { useState } from "react";
 
 export default function Home() {
-  const [html, setHtml] = useState();
+  const [html, setHtml] = useState<string>();
   const [loading, setLoading] = useState(false);
   async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
     try {
@@ -36,17 +36,28 @@ export default function Home() {
     <article
       style={{
         marginTop: "3rem",
+        width: "100%",
       }}
     >
-      <input
+      <div
         style={{
-          border: "1px solid #ccc",
+          paddingTop: "3rem",
+          paddingBottom: "3rem",
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
         }}
-        type="file"
-        onChange={handleFileUpload}
-      />
+      >
+        <input
+          style={{
+            border: "1px solid #ccc",
+          }}
+          type="file"
+          onChange={handleFileUpload}
+        />
+      </div>
       {loading && <p>Loading...please wait</p>}
-      <DocumentEditor initialData={html} />
+      <DocumentEditor initialData={html} onChange={(html) => setHtml(html)} />
     </article>
   );
 }
